@@ -10,7 +10,18 @@ from docker.types import Mount
 
 DAG_ID = os.path.basename(__file__).replace(".py", "")
 DAG_OWNER = "data-engineering"
-RSS_SOURCE_IDS = ("vnexpress",)
+RSS_SOURCE_IDS = (
+    "baochinhphu",
+    "cafef",
+    "dantri",
+    "genk",
+    "kenh14",
+    "thanhnien",
+    "tienphong",
+    "tuoitre",
+    "vneconomy",
+    "vnexpress",
+)
 
 with DAG(
     dag_id=DAG_ID,
