@@ -7,12 +7,10 @@ import pendulum
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
-from news_platform.config import load_sources
 
 DAG_ID = os.path.basename(__file__).replace(".py", "")
 DAG_OWNER = "data-engineering"
-
-_SOURCES = load_sources(enabled_only=True)
+RSS_SOURCE_IDS = ("vnexpress",)
 
 with DAG(
     dag_id=DAG_ID,
@@ -23,9 +21,7 @@ with DAG(
     max_active_runs=1,
     tags=["etl", "docker", "rss"],
 ) as dag:
-    for source in _SOURCES:
-        source_id = source["source_id"]
-        feed_count = len(source["feed_discovery"]["feeds"])
+    for source_id in RSS_SOURCE_IDS:
         DockerOperator(
             task_id=f"ingest_{source_id}",
             image=os.environ["VN_NEWS_FEED_INGESTOR_IMAGE"],
@@ -53,5 +49,5 @@ with DAG(
             retries=2,
             retry_delay=timedelta(minutes=1),
             execution_timeout=timedelta(minutes=15),
-            doc=f"Scrape all {feed_count} RSS feeds for {source_id}.",
+            doc=f"Scrape all configured RSS feeds for {source_id}.",
         )

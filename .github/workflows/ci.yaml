@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out orchestration
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8
+        with:
+          version: "0.11.17"
+          python-version: "3.12"
+
+      - name: Verify Python and DAG loading
+        env:
+          VN_NEWS_CONFIG_HOST_DIR: /tmp/vn-news-config/configs
+          VN_NEWS_FEED_INGESTOR_IMAGE: docker.io/toilachuoituyet/vn-news-feed-ingestor:ci
+        run: |
+          uv sync --frozen --all-groups
+          uv lock --check
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run python -c "from dags.etl_docker_rss_ingestion import dag; assert dag.dag_id == 'etl_docker_rss_ingestion'; assert set(dag.task_ids) == {'ingest_vnexpress'}"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build Airflow image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile
+          push: false
+          tags: local/vn-news-airflow:ci
+          cache-from: type=gha,scope=vn-news-airflow
+          cache-to: type=gha,mode=max,scope=vn-news-airflow
