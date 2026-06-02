@@ -1747,6 +1747,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "apache-airflow-providers-docker" },
+    { name = "pyyaml" },
 ]
 
 [package.dev-dependencies]
@@ -1755,7 +1756,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "apache-airflow-providers-docker", specifier = ">=4.4.0" }]
+requires-dist = [
+    { name = "apache-airflow-providers-docker", specifier = ">=4.4.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [{ name = "ruff", specifier = ">=0.15" }]
