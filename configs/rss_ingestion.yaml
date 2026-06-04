@@ -1,0 +1,17 @@
+owner: data-engineering
+schedule: "*/5 * * * *"
+timezone: Asia/Ho_Chi_Minh
+retries: 2
+retry_delay_minutes: 1
+execution_timeout_minutes: 15
+feed_ingestor_image_env: VN_NEWS_FEED_INGESTOR_IMAGE
+docker_url_env: VN_NEWS_DOCKER_URL
+host_config_dir_env: VN_NEWS_CONFIG_HOST_DIR
+host_secrets_dir_env: VN_NEWS_SECRETS_HOST_DIR
+ingestion_credentials_file: ingestion-s3-credentials
+container_config_dir: /app/configs
+container_secrets_dir: /run/secrets
+forwarded_env:
+  - VN_NEWS_STORAGE_ENDPOINT_URL
+  - VN_NEWS_REDPANDA_BOOTSTRAP_SERVERS
+  - VN_NEWS_SCHEMA_REGISTRY_URL
