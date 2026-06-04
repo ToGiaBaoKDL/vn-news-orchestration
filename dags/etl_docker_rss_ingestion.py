@@ -18,7 +18,8 @@ CONTAINER_ENV_NAMES = (
     "VN_NEWS_REDPANDA_BOOTSTRAP_SERVERS",
     "VN_NEWS_SCHEMA_REGISTRY_URL",
 )
-PRIVATE_CONTAINER_ENV_NAMES = ("AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY")
+HOST_SECRETS_DIR = Path(os.environ.get("VN_NEWS_SECRETS_HOST_DIR", "/run/vn-news/secrets"))
+INGESTION_CREDENTIALS_FILE = "ingestion-s3-credentials"
 
 
 def load_enabled_rss_source_ids() -> tuple[str, ...]:
@@ -57,13 +58,19 @@ with DAG(
                     target="/app/configs",
                     type="bind",
                     read_only=True,
-                )
+                ),
+                Mount(
+                    source=str(HOST_SECRETS_DIR / INGESTION_CREDENTIALS_FILE),
+                    target=f"/run/secrets/{INGESTION_CREDENTIALS_FILE}",
+                    type="bind",
+                    read_only=True,
+                ),
             ],
             environment={
+                "AWS_SHARED_CREDENTIALS_FILE": f"/run/secrets/{INGESTION_CREDENTIALS_FILE}",
                 "VN_NEWS_CONFIG_DIR": "/app/configs",
                 **forwarded_environment(CONTAINER_ENV_NAMES),
             },
-            private_environment=forwarded_environment(PRIVATE_CONTAINER_ENV_NAMES),
             mount_tmp_dir=False,
             auto_remove="success",
             force_pull=False,
