@@ -5,7 +5,7 @@ retries: 2
 retry_delay_minutes: 1
 execution_timeout_minutes: 15
 feed_ingestor_image_env: VN_NEWS_FEED_INGESTOR_IMAGE
-docker_url_env: VN_NEWS_DOCKER_URL
+docker_daemon_url_env: VN_NEWS_DOCKER_DAEMON_URL
 host_config_dir_env: VN_NEWS_CONFIG_HOST_DIR
 host_secrets_dir_env: VN_NEWS_SECRETS_HOST_DIR
 ingestion_credentials_file: ingestion-s3-credentials

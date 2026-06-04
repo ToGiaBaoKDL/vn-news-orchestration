@@ -18,7 +18,7 @@ class RssIngestionConfig:
     retry_delay_minutes: int
     execution_timeout_minutes: int
     feed_ingestor_image_env: str
-    docker_url_env: str
+    docker_daemon_url_env: str
     host_config_dir_env: str
     host_secrets_dir_env: str
     ingestion_credentials_file: str
@@ -42,7 +42,7 @@ def load_rss_ingestion_config() -> RssIngestionConfig:
         retry_delay_minutes=int(config["retry_delay_minutes"]),
         execution_timeout_minutes=int(config["execution_timeout_minutes"]),
         feed_ingestor_image_env=config["feed_ingestor_image_env"],
-        docker_url_env=config["docker_url_env"],
+        docker_daemon_url_env=config["docker_daemon_url_env"],
         host_config_dir_env=config["host_config_dir_env"],
         host_secrets_dir_env=config["host_secrets_dir_env"],
         ingestion_credentials_file=config["ingestion_credentials_file"],

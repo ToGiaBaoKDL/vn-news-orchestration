@@ -1,6 +1,4 @@
 ^configs/.*
 ^news_orchestration/.*
-^pyproject\.toml$
-^uv\.lock$
 ^\.gitignore$
 ^\.airflowignore$

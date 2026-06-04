@@ -34,7 +34,7 @@ with DAG(
             task_id=f"ingest_{source_id}",
             image=required_env(CONFIG.feed_ingestor_image_env),
             command=["--source-id", source_id, "--all-feeds"],
-            docker_url=required_env(CONFIG.docker_url_env),
+            docker_url=required_env(CONFIG.docker_daemon_url_env),
             mounts=[
                 Mount(
                     source=required_env(CONFIG.host_config_dir_env),
