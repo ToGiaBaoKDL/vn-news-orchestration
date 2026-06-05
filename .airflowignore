@@ -1,4 +1,4 @@
 ^configs/.*
-^news_orchestration/.*
+^utils/.*
 ^\.gitignore$
 ^\.airflowignore$

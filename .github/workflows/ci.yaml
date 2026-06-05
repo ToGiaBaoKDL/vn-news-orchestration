@@ -26,4 +26,4 @@ jobs:
         run: |
           uvx --from ruff==0.15.0 ruff check --select E,F,I,B,UP,SIM --target-version py312 --line-length 100 .
           uvx --from ruff==0.15.0 ruff format --check --line-length 100 .
-          python -m compileall -q dags news_orchestration
+          python -m compileall -q dags utils

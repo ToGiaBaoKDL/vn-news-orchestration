@@ -8,12 +8,12 @@ from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
-from news_orchestration.utils.config import (
+from utils.config import (
     dag_id_from_file,
     load_rss_ingestion_config,
 )
-from news_orchestration.utils.env import forwarded_environment, required_env
-from news_orchestration.utils.sources import load_enabled_rss_source_ids
+from utils.env import forwarded_environment, required_env
+from utils.sources import load_enabled_rss_source_ids
 
 DAG_ID = dag_id_from_file(__file__)
 CONFIG = load_rss_ingestion_config()
