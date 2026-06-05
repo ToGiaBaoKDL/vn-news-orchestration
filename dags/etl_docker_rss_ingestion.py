@@ -34,6 +34,9 @@ with DAG(
             task_id=f"ingest_{source_id}",
             image=required_env(CONFIG.feed_ingestor_image_env),
             command=["--source-id", source_id, "--all-feeds"],
+            container_name=(
+                f"vn-news-feed-ingestor-{source_id}-{{{{ ts_nodash }}}}-try-{{{{ ti.try_number }}}}"
+            ),
             docker_url=required_env(CONFIG.docker_daemon_url_env),
             mounts=[
                 Mount(
