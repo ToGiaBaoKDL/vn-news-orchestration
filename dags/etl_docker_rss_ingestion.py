@@ -18,6 +18,12 @@ from utils.sources import load_enabled_rss_source_ids
 DAG_ID = dag_id_from_file(__file__)
 CONFIG = load_rss_ingestion_config()
 CONTAINER_CREDENTIALS_PATH = f"{CONFIG.container_secrets_dir}/{CONFIG.ingestion_credentials_file}"
+TASK_LABELS = {
+    "com.tgbao.vn-news.component": "rss-ingestion",
+    "com.tgbao.vn-news.dag-id": DAG_ID,
+    "com.tgbao.vn-news.managed-by": "airflow",
+    "com.tgbao.vn-news.service": "feed-ingestor",
+}
 
 
 with DAG(
@@ -37,6 +43,7 @@ with DAG(
             container_name=(
                 f"vn-news-feed-ingestor-{source_id}-{{{{ ts_nodash }}}}-try-{{{{ ti.try_number }}}}"
             ),
+            labels={**TASK_LABELS, "com.tgbao.vn-news.source-id": source_id},
             docker_url=required_env(CONFIG.docker_daemon_url_env),
             mounts=[
                 Mount(
