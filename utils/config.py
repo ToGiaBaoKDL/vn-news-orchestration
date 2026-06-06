@@ -14,6 +14,7 @@ class RssIngestionConfig:
     owner: str
     schedule: str
     timezone: str
+    max_active_tasks: int
     retries: int
     retry_delay_minutes: int
     execution_timeout_minutes: int
@@ -38,6 +39,7 @@ def load_rss_ingestion_config() -> RssIngestionConfig:
         owner=config["owner"],
         schedule=config["schedule"],
         timezone=config["timezone"],
+        max_active_tasks=int(config["max_active_tasks"]),
         retries=int(config["retries"]),
         retry_delay_minutes=int(config["retry_delay_minutes"]),
         execution_timeout_minutes=int(config["execution_timeout_minutes"]),

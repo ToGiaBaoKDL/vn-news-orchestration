@@ -1,6 +1,7 @@
 owner: data-engineering
-schedule: "*/5 * * * *"
+schedule: "*/10 * * * *"
 timezone: Asia/Ho_Chi_Minh
+max_active_tasks: 3
 retries: 2
 retry_delay_minutes: 1
 execution_timeout_minutes: 15

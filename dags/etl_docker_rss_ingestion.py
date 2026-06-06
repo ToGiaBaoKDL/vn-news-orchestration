@@ -33,6 +33,7 @@ with DAG(
     start_date=pendulum.datetime(2026, 6, 1, tz=CONFIG.timezone),
     catchup=False,
     max_active_runs=1,
+    max_active_tasks=CONFIG.max_active_tasks,
     tags=["etl", "docker", "rss"],
 ) as dag:
     for source_id in load_enabled_rss_source_ids():
