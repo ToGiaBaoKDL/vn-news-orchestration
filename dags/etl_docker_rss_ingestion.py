@@ -29,7 +29,7 @@ TASK_LABELS = {
 with DAG(
     dag_id=DAG_ID,
     default_args={"owner": CONFIG.owner},
-    schedule=CONFIG.schedule,
+    schedule=timedelta(minutes=CONFIG.schedule_interval_minutes),
     start_date=pendulum.datetime(2026, 6, 1, tz=CONFIG.timezone),
     catchup=False,
     max_active_runs=1,

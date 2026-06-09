@@ -12,7 +12,7 @@ ORCHESTRATION_CONFIG_DIR = REPO_ROOT / "configs"
 @dataclass(frozen=True)
 class RssIngestionConfig:
     owner: str
-    schedule: str
+    schedule_interval_minutes: int
     timezone: str
     max_active_tasks: int
     retries: int
@@ -37,7 +37,7 @@ def load_rss_ingestion_config() -> RssIngestionConfig:
     config = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     return RssIngestionConfig(
         owner=config["owner"],
-        schedule=config["schedule"],
+        schedule_interval_minutes=int(config["schedule_interval_minutes"]),
         timezone=config["timezone"],
         max_active_tasks=int(config["max_active_tasks"]),
         retries=int(config["retries"]),

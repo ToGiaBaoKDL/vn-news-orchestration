@@ -1,5 +1,5 @@
 owner: data-engineering
-schedule: "*/15 * * * *"
+schedule_interval_minutes: 45
 timezone: Asia/Ho_Chi_Minh
 max_active_tasks: 3
 retries: 2
